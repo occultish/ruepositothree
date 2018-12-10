@@ -4,12 +4,17 @@ using System.Collections;
 using Ink.Runtime;
 
 // This is a super bare bones example of how to play and display a ink story in Unity.
-public class BasicInkExample : MonoBehaviour {
-	
+public class BasicInkExample : MonoBehaviour
+{
+
+	public AudioClip sentSound;
+	public AudioClip receivedSound;
+	private AudioSource auso;
 	void Awake () {
 		// Remove the default message
 		RemoveChildren();
 		StartStory();
+		auso = GetComponent<AudioSource>();
 	}
 
 	// Creates a new Story object with the compiled story which we can then play!
@@ -57,6 +62,7 @@ public class BasicInkExample : MonoBehaviour {
 
 	// When we click the choice button, tell the story to choose that choice!
 	void OnClickChoiceButton (Choice choice) {
+		auso.PlayOneShot(sentSound);
 		story.ChooseChoiceIndex (choice.index);
 		RefreshView();
 	}
